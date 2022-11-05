@@ -29,6 +29,9 @@ public class MeasuresController {
         return measureService.findAllMeasures();
     }
 
-
+    @GetMapping("/rainyDays")
+    public List<Measure> findRainyDay(){
+        return measureService.findAllMeasuresWithRainyDays();
+    }
 
 }

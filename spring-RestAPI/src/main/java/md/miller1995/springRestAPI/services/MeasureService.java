@@ -25,5 +25,9 @@ public class MeasureService {
         return measureRepository.findAll();
     }
 
+    public List<Measure> findAllMeasuresWithRainyDays(){
+        return measureRepository.findByRainingTrue();
+    }
+
 
 }
