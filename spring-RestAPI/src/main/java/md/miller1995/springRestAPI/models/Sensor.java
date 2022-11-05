@@ -5,11 +5,12 @@ import org.springframework.stereotype.Service;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 
 @Entity
 @Table(name = "Sensor")
-public class Sensor {
+public class Sensor implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,7 +1,6 @@
 package md.miller1995.springRestAPI.models;
 
 import javax.persistence.*;
-import javax.print.attribute.standard.DateTimeAtCreation;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
@@ -24,16 +23,18 @@ public class Measure {
     @JoinColumn(name = "sensor", referencedColumnName = "name")
     private Sensor sensor;
 
-    @Column(name = "create_at")
+    @Column(name = "created_at")
     @NotEmpty
     private LocalDateTime createAt;
 
 
     public Measure(){}
 
-    public Measure(float value, boolean raining) {
+    public Measure(float value, boolean raining, Sensor sensor, LocalDateTime createAt) {
         this.value = value;
         this.raining = raining;
+        this.sensor = sensor;
+        this.createAt = createAt;
     }
 
     public int getId() {
@@ -52,6 +53,14 @@ public class Measure {
         this.value = value;
     }
 
+    public boolean isRaining() {
+        return raining;
+    }
+
+    public void setRaining(boolean raining) {
+        this.raining = raining;
+    }
+
     public Sensor getSensor() {
         return sensor;
     }
@@ -66,22 +75,5 @@ public class Measure {
 
     public void setCreateAt(LocalDateTime createAt) {
         this.createAt = createAt;
-    }
-
-    public boolean isRaining() {
-        return raining;
-    }
-
-    public void setRaining(boolean raining) {
-        this.raining = raining;
-    }
-
-    @Override
-    public String toString() {
-        return "Measure{" +
-                "id=" + id +
-                ", value=" + value +
-                ", raining=" + raining +
-                '}';
     }
 }

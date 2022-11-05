@@ -49,18 +49,17 @@ CREATE TABLE Measure (
     sensor varchar REFERENCES Sensor(name)   
 );
 
-ALTER TABLE Measure ADD COLUMN created_at 
-
+ALTER TABLE Measure ADD COLUMN created_at TIMESTAMP;
 
 DELETE FROM Measure;
 
 SELECT * FROM Measure;
 
-INSERT INTO Measure("value", raining, sensor) VALUES (22.4, false , 'RD_32');
-INSERT INTO Measure("value", raining, sensor) VALUES (16, false , 'RD_32');
-INSERT INTO Measure("value", raining, sensor) VALUES (-22.5, false , 'RD_44');
-INSERT INTO Measure("value", raining, sensor) VALUES (11.4, true, 'RD_44');
-INSERT INTO Measure("value", raining, sensor) VALUES (7.6, true, 'RD_44');]]></console>
+INSERT INTO Measure("value", raining, sensor, created_at) VALUES (22.4, false , 'RD_32', current_timestamp);
+INSERT INTO Measure("value", raining, sensor, created_at) VALUES (16, false , 'RD_32', current_timestamp);
+INSERT INTO Measure("value", raining, sensor, created_at) VALUES (-22.5, false , 'RD_44', current_timestamp);
+INSERT INTO Measure("value", raining, sensor, created_at) VALUES (11.4, true, 'RD_44', current_timestamp);
+INSERT INTO Measure("value", raining, sensor, created_at) VALUES (7.6, true, 'RD_44', current_timestamp);]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
