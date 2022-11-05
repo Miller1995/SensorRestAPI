@@ -1,5 +1,6 @@
 package md.miller1995.springRestAPI.services;
 
+import md.miller1995.springRestAPI.dto.SensorDTO;
 import md.miller1995.springRestAPI.models.Sensor;
 import md.miller1995.springRestAPI.repositories.SensorsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,13 @@ public class SensorsService {
     public List<Sensor> findAllSensors(){              // find all sensors from database and return its
         return sensorsRepository.findAll();
     }
+
+    @Transactional
+    public void saveSensors(Sensor sensor){           // save object class Sensor in database
+        sensorsRepository.save(sensor);
+    }
+
+
 
 
 }

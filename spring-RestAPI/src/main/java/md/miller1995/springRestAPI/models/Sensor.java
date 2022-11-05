@@ -1,8 +1,7 @@
 package md.miller1995.springRestAPI.models;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+
 
 @Entity
 @Table(name = "Sensor")
@@ -16,18 +15,10 @@ public class Sensor {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "value")
-    private float value;
-
-    @Column(name = "raining")
-    private boolean raining;
-
     public Sensor(){}
 
-    public Sensor(String name, float value, boolean raining) {
+    public Sensor(String name) {
         this.name = name;
-        this.value = value;
-        this.raining = raining;
     }
 
     public int getId() {
@@ -46,19 +37,11 @@ public class Sensor {
         this.name = name;
     }
 
-    public float getValue() {
-        return value;
-    }
-
-    public void setValue(float value) {
-        this.value = value;
-    }
-
-    public boolean isRaining() {
-        return raining;
-    }
-
-    public void setRaining(boolean raining) {
-        this.raining = raining;
+    @Override
+    public String toString() {
+        return "Sensor{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
