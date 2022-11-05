@@ -1,6 +1,10 @@
 package md.miller1995.springRestAPI.models;
 
+import org.springframework.stereotype.Service;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 
 @Entity
@@ -13,6 +17,8 @@ public class Sensor {
     private int id;
 
     @Column(name = "name")
+    @NotEmpty(message = "Name shouldn't be empty")
+    @Size(min = 3, max = 30, message = "Name should be between 3 and 30 characters")
     private String name;
 
     public Sensor(){}
