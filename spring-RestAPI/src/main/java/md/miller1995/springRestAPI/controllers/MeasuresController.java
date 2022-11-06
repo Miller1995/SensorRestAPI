@@ -5,11 +5,10 @@ import md.miller1995.springRestAPI.dto.MeasureDTO;
 import md.miller1995.springRestAPI.models.Measure;
 import md.miller1995.springRestAPI.services.MeasureService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -32,6 +31,16 @@ public class MeasuresController {
     @GetMapping("/rainyDays")
     public List<Measure> findRainyDay(){
         return measureService.findAllMeasuresWithRainyDays();
+    }
+
+    @GetMapping("/rainyDaysCount")
+    public long findRainyDaysCount(){
+//        return measureService.findAllMeasuresWithRainyDays().size();                              // size() -> return int
+                                    //or
+        return measureService.findAllMeasures().stream().filter(Measure::isRaining).count();        //count() -> return long, use filter at method findAllMeasure, we can't create method -
+                                                                                                                                                        // -- findAllMeasureWithRainyDays
+                                    //or
+//        return measureService.findAllMeasuresWithRainyDays().stream().count();                    //count() -> return long    ---- all methods are working
     }
 
 }

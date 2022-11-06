@@ -27,16 +27,16 @@ public class SensorsController {
         this.sensorValidator = sensorValidator;
     }
 
+
     @GetMapping()
     public List<Sensor> getSensors(){
         return sensorsService.findAllSensors();         // return List of objects class Sensor and Jackson automatic is converting this objects to JSON
     }
 
+
     @PostMapping("/registration")
     public ResponseEntity<HttpStatus> addSensors(@RequestBody @Valid SensorDTO sensorDTO,              //return object with http answer  ->  RequestBody converted json in Sensor
                                                  BindingResult bindingResult){
-
-
 
         sensorValidator.validate(convertToSensor(sensorDTO), bindingResult);
 
@@ -48,11 +48,10 @@ public class SensorsController {
     }
 
 
-
-    private Sensor convertToSensor(SensorDTO sensorDTO) {    // method is converting object sensorDTO in object sensor
+    // method is converting object sensorDTO in object sensor
+    private Sensor convertToSensor(SensorDTO sensorDTO) {
         Sensor sensor = new Sensor();
         sensor.setName(sensorDTO.getName());
         return sensor;
     }
-
 }
