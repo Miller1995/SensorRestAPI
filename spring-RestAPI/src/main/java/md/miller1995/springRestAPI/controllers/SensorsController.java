@@ -5,6 +5,7 @@ import md.miller1995.springRestAPI.dto.SensorDTO;
 import md.miller1995.springRestAPI.models.Sensor;
 import md.miller1995.springRestAPI.services.SensorsService;
 import md.miller1995.springRestAPI.util.SensorValidator;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +21,13 @@ public class SensorsController {
 
     private final SensorsService sensorsService;          // injection sensorService with Spring
     private final SensorValidator sensorValidator;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public SensorsController(SensorsService sensorsService, SensorValidator sensorValidator) {
+    public SensorsController(SensorsService sensorsService, SensorValidator sensorValidator, ModelMapper modelMapper) {
         this.sensorsService = sensorsService;
         this.sensorValidator = sensorValidator;
+        this.modelMapper = modelMapper;
     }
 
 
@@ -50,8 +53,11 @@ public class SensorsController {
 
     // method is converting object sensorDTO in object sensor
     private Sensor convertToSensor(SensorDTO sensorDTO) {
-        Sensor sensor = new Sensor();
-        sensor.setName(sensorDTO.getName());
-        return sensor;
+        return modelMapper.map(sensorDTO, Sensor.class);
+
+                    //equals
+//        Sensor sensor = new Sensor();
+//        sensor.setName(sensorDTO.getName());
+//        return sensor;
     }
 }

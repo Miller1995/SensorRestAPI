@@ -5,6 +5,7 @@ import md.miller1995.springRestAPI.dto.MeasureDTO;
 import md.miller1995.springRestAPI.models.Measure;
 import md.miller1995.springRestAPI.services.MeasureService;
 import md.miller1995.springRestAPI.util.MeasureValidator;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +21,13 @@ public class MeasuresController {
 
     private final MeasureService measureService;
     private final MeasureValidator measureValidator;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public MeasuresController(MeasureService measureService, MeasureValidator measureValidator) {
+    public MeasuresController(MeasureService measureService, MeasureValidator measureValidator, ModelMapper modelMapper) {
         this.measureService = measureService;
         this.measureValidator = measureValidator;
+        this.modelMapper = modelMapper;
     }
 
 
@@ -63,10 +66,13 @@ public class MeasuresController {
     }
 
     private Measure convertToMeasure(MeasureDTO measureDTO) {
-        Measure measure = new Measure();
-        measure.setValue(measureDTO.getValue());
-        measure.setRaining(measureDTO.isRaining());
-        measure.setSensor(measureDTO.getSensor());
+        Measure measure = modelMapper.map(measureDTO,Measure.class);           // using ModelMapper updating this method
+
+                        // equals
+//        Measure measure = new Measure();
+//        measure.setValue(measureDTO.getValue());
+//        measure.setRaining(measureDTO.isRaining());
+//        measure.setSensor(measureDTO.getSensor());
 
         return measure;
     }
