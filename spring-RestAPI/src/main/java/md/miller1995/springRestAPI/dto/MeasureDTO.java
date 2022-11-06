@@ -2,36 +2,36 @@ package md.miller1995.springRestAPI.dto;
 
 
 import md.miller1995.springRestAPI.models.Sensor;
+import org.hibernate.validator.constraints.Range;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
 
 public class MeasureDTO {
 
-    @NotNull(message = "Value shouldn't be null")
-    @Size(min = -100, max = 100, message = "Value is between -100 and 100")
-    private float value;
+    @NotNull
+    @Range(min = -100, max = 100)
+    private Float value;
 
-    @NotEmpty(message = "Raining shouldn't be empty")
-    private boolean raining;
+    @NotNull
+    private Boolean raining;
 
-    @NotEmpty(message = "Sensor shouldn't be empty")
+    @NotNull
     private Sensor sensor;
 
-    public float getValue() {
+    public Float getValue() {
         return value;
     }
 
-    public void setValue(float value) {
+    public void setValue(Float value) {
         this.value = value;
     }
 
-    public boolean isRaining() {
+    public Boolean getRaining() {
         return raining;
     }
 
-    public void setRaining(boolean raining) {
+    public void setRaining(Boolean raining) {
         this.raining = raining;
     }
 

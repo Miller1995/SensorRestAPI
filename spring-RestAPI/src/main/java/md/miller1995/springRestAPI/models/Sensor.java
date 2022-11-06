@@ -1,6 +1,5 @@
 package md.miller1995.springRestAPI.models;
 
-import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -10,14 +9,16 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "Sensor")
-public class Sensor implements Serializable {
+public class Sensor implements Serializable {    // implement serializable because our FK is not for PK =id, but for = name
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @Column(name = "name")
+    @NotEmpty(message = "Name shouldn't be empty")
+    @Size(min = 3, max = 30, message = "Name should be between 3 and 30 characters")
     private String name;
 
     public Sensor(){}
@@ -26,11 +27,11 @@ public class Sensor implements Serializable {
         this.name = name;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -40,13 +41,5 @@ public class Sensor implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "Sensor{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
     }
 }
