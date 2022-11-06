@@ -27,7 +27,7 @@ public class MeasureDTO {
         this.value = value;
     }
 
-    public Boolean getRaining() {
+    public Boolean isRaining() {
         return raining;
     }
 
