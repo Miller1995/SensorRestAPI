@@ -4,6 +4,8 @@ package md.miller1995.springRestAPI.controllers;
 import md.miller1995.springRestAPI.dto.MeasureDTO;
 import md.miller1995.springRestAPI.models.Measure;
 import md.miller1995.springRestAPI.services.MeasureService;
+import md.miller1995.springRestAPI.util.ErrorResponse;
+import md.miller1995.springRestAPI.util.MeasureAndSensorInvalidInputException;
 import md.miller1995.springRestAPI.util.MeasureValidator;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+
+import static md.miller1995.springRestAPI.util.ErrorForClient.returnErrorsToClient;
 
 @RestController
 @RequestMapping("/measurements")
@@ -59,7 +63,7 @@ public class MeasuresController {
         measureValidator.validate(convertToMeasure(measureDTO), bindingResult);
 
             if (bindingResult.hasErrors())
-                return ResponseEntity.ok(HttpStatus.NOT_ACCEPTABLE);
+                returnErrorsToClient(bindingResult);
 
         measureService.saveMeasure(convertToMeasure(measureDTO));
             return ResponseEntity.ok(HttpStatus.OK);
@@ -75,6 +79,13 @@ public class MeasuresController {
 //        measure.setSensor(measureDTO.getSensor());
 
         return measure;
+    }
+
+    @ExceptionHandler
+    private ResponseEntity<ErrorResponse> handleException(MeasureAndSensorInvalidInputException e) {
+        ErrorResponse response = new ErrorResponse(e.getMessage(), System.currentTimeMillis());
+
+        return new ResponseEntity<>(response, HttpStatus.NOT_ACCEPTABLE);
     }
 
 }

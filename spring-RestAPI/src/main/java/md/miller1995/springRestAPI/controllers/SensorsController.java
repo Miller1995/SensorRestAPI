@@ -4,6 +4,8 @@ package md.miller1995.springRestAPI.controllers;
 import md.miller1995.springRestAPI.dto.SensorDTO;
 import md.miller1995.springRestAPI.models.Sensor;
 import md.miller1995.springRestAPI.services.SensorsService;
+import md.miller1995.springRestAPI.util.ErrorResponse;
+import md.miller1995.springRestAPI.util.MeasureAndSensorInvalidInputException;
 import md.miller1995.springRestAPI.util.SensorValidator;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+
+import static md.miller1995.springRestAPI.util.ErrorForClient.returnErrorsToClient;
 
 @RestController                 // equals --> @Controller + @ResponseBody for all method and all method from this controller return json but not (html etc.)
 @RequestMapping("/sensors")     // all methods in this controller have address "/sensor"
@@ -44,7 +48,8 @@ public class SensorsController {
         sensorValidator.validate(convertToSensor(sensorDTO), bindingResult);
 
         if (bindingResult.hasErrors())
-            return ResponseEntity.ok(HttpStatus.NOT_ACCEPTABLE);
+            returnErrorsToClient(bindingResult);
+
 
         sensorsService.saveSensors(convertToSensor(sensorDTO));
         return ResponseEntity.ok(HttpStatus.OK);      // return for client -> the message OK (sent HTTP response with empty body and status 200)
@@ -60,4 +65,15 @@ public class SensorsController {
 //        sensor.setName(sensorDTO.getName());
 //        return sensor;
     }
+
+
+    // catch exception and return Json with errors
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handleException (MeasureAndSensorInvalidInputException exception){  // catch exception MeasureAndSensorInvalidInputException f
+                                                                                                                // rom returnErrorsToClient(bindingResult);
+       ErrorResponse errorResponse = new ErrorResponse(exception.getMessage(), System.currentTimeMillis());
+       return new ResponseEntity<>(errorResponse,HttpStatus.NOT_ACCEPTABLE);
+    }
+
+
 }
