@@ -1,7 +1,5 @@
 package md.miller1995.springRestAPI.dto;
 
-
-import md.miller1995.springRestAPI.models.Sensor;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;
@@ -17,7 +15,7 @@ public class MeasureDTO {
     private Boolean raining;
 
     @NotNull
-    private Sensor sensor;
+    private SensorDTO sensor;
 
     public Float getValue() {
         return value;
@@ -35,11 +33,11 @@ public class MeasureDTO {
         this.raining = raining;
     }
 
-    public Sensor getSensor() {
+    public SensorDTO getSensor() {
         return sensor;
     }
 
-    public void setSensor(Sensor sensor) {
+    public void setSensor(SensorDTO sensor) {
         this.sensor = sensor;
     }
 }
